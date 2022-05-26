@@ -67,13 +67,14 @@ tunnel(PUBLISHER_CONFIG, function (error, server) {
   console.log("connected---------");
   sock.subscribe('impressions');
   console.log('Subscriber connected to', address);
-  sock.on('message', async function (topic, message) {
-    console.log('received a message related to:', topic.toString(), 'containing message:', message.toString());
-    topic = topic.toString();
-    if (topic === "impressions") {
-      await onImpressions();
-    }
-  });
+  // sock.on('message', async function (topic, message) {
+  //   console.log('received a message related to:', topic.toString(), 'containing message:', message.toString());
+  //   topic = topic.toString();
+  //   const data = JSON.parse(message.toString());
+  //   if (topic === "impressions") {
+  //     await onImpressions(data);
+  //   }
+  // });
 });
 
 var tunnel = require('tunnel-ssh');
@@ -92,14 +93,15 @@ tunnel(BIDDER_CONFIG, function (error, server) {
   console.log("connected---------");
   sock.subscribe('impressions');
   console.log('Subscriber connected to', address);
-  sock.on('message', async function (topic, message) {
-    console.log('received a message related to:', topic.toString(), 'containing message:', message.toString());
-    topic = topic.toString();
-    const data = JSON.parse(message.toString());
-    if (topic === "impressions") {
-      await onImpressions(data);
-    }
-  });
+});
+
+sock.on('message', async function (topic, message) {
+  console.log('received a message related to:', topic.toString(), 'containing message:', message.toString());
+  topic = topic.toString();
+  const data = JSON.parse(message.toString());
+  if (topic === "impressions") {
+    await onImpressions(data);
+  }
 });
 
 

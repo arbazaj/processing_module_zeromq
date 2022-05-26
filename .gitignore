@@ -100,3 +100,4 @@ dist
 .tern-port
 sample.js
 *.env
+package-lock.json
