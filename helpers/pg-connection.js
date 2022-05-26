@@ -19,7 +19,7 @@ const sequelize = new Sequelize({
   dialectModule: pg,
   username: user,
   password,
-  // database,
+  database,
   host,
   port,
   logging: function (str) {

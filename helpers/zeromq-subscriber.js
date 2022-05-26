@@ -95,8 +95,9 @@ tunnel(BIDDER_CONFIG, function (error, server) {
   sock.on('message', async function (topic, message) {
     console.log('received a message related to:', topic.toString(), 'containing message:', message.toString());
     topic = topic.toString();
+    const data = JSON.parse(message.toString());
     if (topic === "impressions") {
-      await onImpressions();
+      await onImpressions(data);
     }
   });
 });
@@ -104,7 +105,6 @@ tunnel(BIDDER_CONFIG, function (error, server) {
 
 const onImpressions = async (data) => {
   try {
-    const data = JSON.parse(message.toString());
     if (data.publisher_id) {
       await handleDailyReportPublisherLevel(data);
       if (data.app_id) {
